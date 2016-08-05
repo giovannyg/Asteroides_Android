@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="30dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_boot_land"
+    tools:context=".Inicio">
+
+    <TextView
+        style="@style/AppName"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="25dp"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:stretchColumns="*">
+        <TableRow
+            android:layout_marginBottom="10dp">
+            <Button
+                style="@style/BotonInicio"
+                android:text="@string/jugar"
+                android:layout_marginRight="10dp"/>
+            <Button
+                style="@style/BotonInicio"
+                android:text="@string/configurar" />
+        </TableRow>
+        <TableRow>
+            <Button
+                style="@style/BotonInicio"
+                android:text="@string/about"
+                android:layout_marginRight="10dp"/>
+            <Button
+                style="@style/BotonInicio"
+                android:text="@string/salir" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
