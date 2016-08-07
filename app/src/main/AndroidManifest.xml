@@ -18,6 +18,7 @@
         <activity
             android:name=".Inicio"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
-
+        <activity android:name=".About"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 </manifest>
