@@ -9,6 +9,9 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,8 +43,9 @@ public class Inicio extends Activity implements View.OnClickListener {
 
     public void iniciarVistas(){
         btn_about = (Button) findViewById(R.id.about);
-
         btn_about.setOnClickListener(this);
+        btn_salir = (Button) findViewById(R.id.salir);
+        btn_salir.setOnClickListener(this);
     }
 
     @Override
@@ -57,5 +61,26 @@ public class Inicio extends Activity implements View.OnClickListener {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+         switch (item.getItemId()) {
+/*             case R.id.config:
+                 break;*/
+             case R.id.about:
+                 startActivity(new Intent(this, About.class));
+                 break;
+         }
+        return true;
     }
 }
