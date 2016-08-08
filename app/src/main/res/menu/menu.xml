@@ -6,5 +6,5 @@
         android:icon="@android:drawable/ic_menu_preferences"/>
     <item android:title="Acerca de..."
           android:id="@+id/about"
-        android:icon="@android:drawable/ic_menu_info_details"/>
+          android:icon="@android:drawable/ic_menu_info_details"/>
 </menu>

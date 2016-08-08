@@ -36,9 +36,16 @@ public class Boot extends Activity {
             @Override
             public void run() {
                 startActivity(new Intent(contexto, Inicio.class));
+                onDestroy();
             }
         };
         timer = new Timer();
         timer.schedule(task, 2000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }
