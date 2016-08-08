@@ -55,14 +55,17 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(this, About.class));
                 break;
             case  "salir":
-                builder = new AlertDialog.Builder(this);
-                builder.setMessage("Esta seguro que desea salir?")
-                       .setPositiveButton("Si", dialogClickListener)
-                       .setNegativeButton("No", dialogClickListener).show();
+                alertSalida();
                 break;
         }
     }
 
+    public void alertSalida() {
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage("Esta seguro que desea salir?")
+                .setPositiveButton("Si", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener(){
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -76,6 +79,17 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
             }
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == event.KEYCODE_BACK) {
+            alertSalida();
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

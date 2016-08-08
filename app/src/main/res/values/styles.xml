@@ -14,7 +14,7 @@
     </style>
     <style name="GActionBarStyle"
         parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <item name="android:background">#010E1A</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
     <!-- App name -->
     <style name="AppName">
