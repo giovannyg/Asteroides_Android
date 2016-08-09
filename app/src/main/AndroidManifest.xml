@@ -17,8 +17,10 @@
         <!-- activities -->
         <activity
             android:name=".Inicio"
-            android:theme="@style/GActionBarTheme"/>
+            android:theme="@style/GTheme"/>
         <activity android:name=".About"
             android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity android:name=".Preferencias"
+            android:theme="@style/AppTheme"/>
     </application>
 </manifest>

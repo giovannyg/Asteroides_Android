@@ -39,6 +39,8 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
 
     public void iniciarVistas(){
+        btn_configurar = (Button) findViewById(R.id.configurar);
+        btn_configurar.setOnClickListener(this);
         btn_about = (Button) findViewById(R.id.about);
         btn_about.setOnClickListener(this);
         btn_salir = (Button) findViewById(R.id.salir);
@@ -51,6 +53,9 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
         if(v.getTag() != null)
 
         switch((String)v.getTag()) {
+            case "configurar":
+                startActivity(new Intent(this, Preferencias.class));
+                break;
             case "about":
                 startActivity(new Intent(this, About.class));
                 break;
@@ -102,8 +107,9 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
          switch (item.getItemId()) {
-/*             case R.id.config:
-                 break;*/
+             case R.id.config:
+                 startActivity(new Intent(this, Preferencias.class));
+                 break;
              case R.id.about:
                  startActivity(new Intent(this, About.class));
                  break;

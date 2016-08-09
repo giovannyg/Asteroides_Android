@@ -8,7 +8,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="GActionBarTheme"
+    <style name="GTheme"
         parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/GActionBarStyle</item>
     </style>
@@ -20,7 +20,6 @@
     <style name="AppName">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/app_name</item>
         <item name="android:textColor">@color/blanco</item>
         <item name="android:textSize">@dimen/app_name</item>
     </style>

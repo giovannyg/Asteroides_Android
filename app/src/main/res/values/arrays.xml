@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipoGraficos">
+        <item>Vectorial</item>
+        <item>Bitmap</item>
+        <item>3D</item>
+    </string-array>
+    <string-array name="tipoGraficosValores">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>
