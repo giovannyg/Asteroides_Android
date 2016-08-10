@@ -2,6 +2,7 @@
     <string name="app_name">Asteroides</string>
 
     <!-- Inicio -->
+    <string name="puntuaciones">Puntuaciones</string>
     <string name="jugar">Jugar</string>
     <string name="configurar">Configurar</string>
     <string name="about">Acerca de</string>

@@ -3,10 +3,12 @@ package com.giovanny.asteroides;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.R.*;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +20,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btn_jugar, btn_configurar, btn_about, btn_salir;
+    private Button btn_jugar, btn_configurar, btn_about, btn_salir, btn_puntuaciones;
     private Menu menu;
     AlertDialog.Builder builder;
+    public static AlmacenPuntuaciones almacen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,18 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
 
     public void iniciarVistas(){
+        almacen = new AlmacenPuntuacionesArray();
+
+        btn_jugar = (Button) findViewById(R.id.jugar);
         btn_configurar = (Button) findViewById(R.id.configurar);
-        btn_configurar.setOnClickListener(this);
         btn_about = (Button) findViewById(R.id.about);
-        btn_about.setOnClickListener(this);
+        btn_puntuaciones = (Button) findViewById(R.id.puntuaciones);
         btn_salir = (Button) findViewById(R.id.salir);
+
+        btn_jugar.setOnClickListener(this);
+        btn_configurar.setOnClickListener(this);
+        btn_about.setOnClickListener(this);
+        btn_puntuaciones.setOnClickListener(this);
         btn_salir.setOnClickListener(this);
     }
 
@@ -53,11 +64,17 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
         if(v.getTag() != null)
 
         switch((String)v.getTag()) {
+            case "jugar":
+                mostrarPreferencias();
+                break;
             case "configurar":
                 startActivity(new Intent(this, Preferencias.class));
                 break;
             case "about":
                 startActivity(new Intent(this, About.class));
+                break;
+            case "puntuaciones":
+                /*startActivity(new Intent(this, Puntuaciones.class));*/
                 break;
             case  "salir":
                 alertSalida();
@@ -115,5 +132,13 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
                  break;
          }
         return true; //Consumimos el item para que no se propague
+    }
+    public void mostrarPreferencias() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String s = "musica" + preferences.getBoolean("musica", true)
+                            + preferences.getString("graficos", "?");
+
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }

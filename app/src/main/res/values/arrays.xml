@@ -10,4 +10,15 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <!-- Multijugador -->
+    <string-array name="tipoConexion">
+        <item>Wifi</item>
+        <item>Bluetooth</item>
+        <item>Internet</item>
+    </string-array>
+    <string-array name="tipoConexionValores">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
