@@ -6,10 +6,13 @@ import java.util.Vector;
  * Created by giovannyg on 09/08/2016.
  */
 public class AlmacenPuntuacionesArray implements AlmacenPuntuaciones {
+
     private Vector<String> puntuaciones;
 
     public AlmacenPuntuacionesArray(){
+
         puntuaciones = new Vector<String>();
+
         puntuaciones.add("123000 Pepito Dominguez");
         puntuaciones.add("111000 Pedro Martinez");
         puntuaciones.add("011000 Paco Perez");
@@ -22,6 +25,6 @@ public class AlmacenPuntuacionesArray implements AlmacenPuntuaciones {
     @Override
     public Vector<String> listaPuntuaciones(int cantidad) {
 
-        return puntuaciones;
+            return puntuaciones;
     }
 }

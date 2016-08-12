@@ -22,5 +22,7 @@
             android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".Preferencias"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".Puntuaciones"
+            android:theme="@style/AppTheme"/>
     </application>
 </manifest>

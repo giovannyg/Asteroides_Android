@@ -74,7 +74,7 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(this, About.class));
                 break;
             case "puntuaciones":
-                /*startActivity(new Intent(this, Puntuaciones.class));*/
+                startActivity(new Intent(this, Puntuacion.class));
                 break;
             case  "salir":
                 alertSalida();
