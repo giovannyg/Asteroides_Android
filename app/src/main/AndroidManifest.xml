@@ -24,5 +24,7 @@
             android:theme="@style/AppTheme"/>
         <activity android:name=".Puntuacion"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".Juego"
+            android:theme="@style/AppTheme"/>
     </application>
 </manifest>
