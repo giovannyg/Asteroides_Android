@@ -65,7 +65,8 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
         switch((String)v.getTag()) {
             case "jugar":
-                mostrarPreferencias();
+                /*mostrarPreferencias();*/
+                startActivity(new Intent(this, Juego.class));
                 break;
             case "configurar":
                 startActivity(new Intent(this, Preferencias.class));

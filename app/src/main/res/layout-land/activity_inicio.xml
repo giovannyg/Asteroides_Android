@@ -24,19 +24,23 @@
             <Button
                 style="@style/BotonInicio"
                 android:text="@string/jugar"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:tag="jugar"/>
             <Button
                 style="@style/BotonInicio"
-                android:text="@string/configurar" />
+                android:text="@string/configurar"
+                android:tag="configurar"/>
         </TableRow>
         <TableRow>
             <Button
                 style="@style/BotonInicio"
                 android:text="@string/about"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:tag="about"/>
             <Button
                 style="@style/BotonInicio"
-                android:text="@string/salir" />
+                android:text="@string/salir"
+                android:tag="salir"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>
