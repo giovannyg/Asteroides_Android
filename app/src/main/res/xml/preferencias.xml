@@ -33,7 +33,6 @@
             android:summary="Conexión, Wifi, Bluetooth o Internet"
             android:entries="@array/tipoConexion"
             android:entryValues="@array/tipoConexionValores"
-            android:defaultValue="1"
-            />
+            android:defaultValue="1" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -51,6 +51,7 @@ public class Grafico {
     public double distancia(Grafico g) {
         return Math.hypot(posX-g.posX, posY-g.posY);
     }
+
     public boolean verificaColision(Grafico g) {
         return (distancia(g) < (radioColision+g.radioColision));
     }

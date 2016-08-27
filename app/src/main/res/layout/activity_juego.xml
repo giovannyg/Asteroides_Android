@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo">
 
     <com.giovanny.asteroides.VistaJuego
         android:id="@+id/VistaJuego"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
-        android:background="@drawable/fondo"/>
+        android:focusable="true" />
 </LinearLayout>

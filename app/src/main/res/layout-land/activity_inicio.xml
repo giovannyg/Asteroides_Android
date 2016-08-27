@@ -22,25 +22,37 @@
         <TableRow
             android:layout_marginBottom="10dp">
             <Button
+                android:id="@+id/jugar"
                 style="@style/BotonInicio"
                 android:text="@string/jugar"
                 android:layout_marginRight="10dp"
                 android:tag="jugar"/>
             <Button
+                android:id="@+id/configurar"
                 style="@style/BotonInicio"
                 android:text="@string/configurar"
                 android:tag="configurar"/>
         </TableRow>
         <TableRow>
             <Button
+                android:id="@+id/about"
                 style="@style/BotonInicio"
                 android:text="@string/about"
                 android:layout_marginRight="10dp"
                 android:tag="about"/>
             <Button
+                android:id="@+id/puntuaciones"
+                style="@style/BotonInicio"
+                android:text="@string/puntuaciones"
+                android:tag="puntuaciones"/>
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/salir"
                 style="@style/BotonInicio"
                 android:text="@string/salir"
-                android:tag="salir"/>
+                android:tag="salir"
+                android:visibility="gone"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>
