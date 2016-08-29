@@ -19,13 +19,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_jugar, btn_configurar, btn_about, btn_salir, btn_puntuaciones;
     private Menu menu;
+    private TextView titulo;
     AlertDialog.Builder builder;
     public static AlmacenPuntuaciones almacen;
 
@@ -50,7 +54,17 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
         btn_about = (Button) findViewById(R.id.about);
         btn_puntuaciones = (Button) findViewById(R.id.puntuaciones);
         btn_salir = (Button) findViewById(R.id.salir);
+        titulo = (TextView) findViewById(R.id.titulo);
 
+        /*Animaciones*/
+        Animation animacion_titulo = AnimationUtils.loadAnimation(this, R.anim.giro_con_zoom);
+        titulo.startAnimation(animacion_titulo);
+        Animation animacion_btn_jugar = AnimationUtils.loadAnimation(this, R.anim.aparecer);
+        btn_jugar.startAnimation(animacion_btn_jugar);
+        Animation animacion_btn_configurar = AnimationUtils.loadAnimation(this, R.anim.desplazamiento_derecha);
+        btn_configurar.startAnimation(animacion_btn_configurar);
+
+        /*Eventos*/
         btn_jugar.setOnClickListener(this);
         btn_configurar.setOnClickListener(this);
         btn_about.setOnClickListener(this);
@@ -63,24 +77,26 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
         if(v.getTag() != null)
 
-        switch((String)v.getTag()) {
-            case "jugar":
+            switch((String)v.getTag()) {
+                case "jugar":
                 /*mostrarPreferencias();*/
-                startActivity(new Intent(this, Juego.class));
-                break;
-            case "configurar":
-                startActivity(new Intent(this, Preferencias.class));
-                break;
-            case "about":
-                startActivity(new Intent(this, About.class));
-                break;
-            case "puntuaciones":
-                startActivity(new Intent(this, Puntuacion.class));
-                break;
-            case  "salir":
-                alertSalida();
-                break;
-        }
+                    startActivity(new Intent(this, Juego.class));
+                    break;
+                case "configurar":
+                    startActivity(new Intent(this, Preferencias.class));
+                    break;
+                case "about":
+                    Animation animacion_btn_acercade = AnimationUtils.loadAnimation(this, R.anim.giro_con_zoom);
+                    btn_about.startAnimation(animacion_btn_acercade);
+                    startActivity(new Intent(this, About.class));
+                    break;
+                case "puntuaciones":
+                    startActivity(new Intent(this, Puntuacion.class));
+                    break;
+                case  "salir":
+                    alertSalida();
+                    break;
+            }
     }
 
     public void alertSalida() {
@@ -124,21 +140,21 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-         switch (item.getItemId()) {
-             case R.id.config:
-                 startActivity(new Intent(this, Preferencias.class));
-                 break;
-             case R.id.about:
-                 startActivity(new Intent(this, About.class));
-                 break;
-         }
+        switch (item.getItemId()) {
+            case R.id.config:
+                startActivity(new Intent(this, Preferencias.class));
+                break;
+            case R.id.about:
+                startActivity(new Intent(this, About.class));
+                break;
+        }
         return true; //Consumimos el item para que no se propague
     }
     public void mostrarPreferencias() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         String s = "musica" + preferences.getBoolean("musica", true)
-                            + preferences.getString("graficos", "?");
+                + preferences.getString("graficos", "?");
 
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }

@@ -10,6 +10,7 @@
     android:background="@drawable/bg_boot">
 
     <TextView
+        android:id="@+id/titulo"
         style="@style/AppName"
         android:text="@string/app_name"
         android:gravity="center_horizontal"

@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.PathShape;
 import android.graphics.drawable.shapes.Shape;
 import android.util.AttributeSet;
@@ -61,12 +62,27 @@ public class VistaJuego extends View {
             dAsteroide.setIntrinsicWidth(50);
             dAsteroide.setIntrinsicHeight(50);
             drawableAsteroide = dAsteroide;
+
+            Path pathNave = new Path();
+            pathNave.moveTo((float) 0.9, (float) 0.0);
+            pathNave.lineTo((float) 0.0, (float) 0.0);
+            pathNave.lineTo((float) 1.0, (float) 0.5);
+            pathNave.lineTo((float) 0.0, (float) 1.0);
+            pathNave.lineTo((float) 1.0, (float) 0.5);
+
+            ShapeDrawable dNave = new ShapeDrawable(new PathShape(pathNave, 1, 1));
+            dNave.getPaint().setColor(Color.RED);
+            dNave.getPaint().setStyle(Paint.Style.STROKE);
+            dNave.setIntrinsicWidth(60);
+            dNave.setIntrinsicHeight(45);
+            drawableNave = dNave;
+
             setBackgroundColor(Color.BLACK);
         } else {
             drawableAsteroide = context.getResources().getDrawable(R.drawable.asteroide1);
+            drawableNave = context.getResources().getDrawable(R.drawable.nave);
         }
 
-        drawableNave = context.getResources().getDrawable(R.drawable.nave);
         nave = new Grafico(this, drawableNave);
 
         Asteroides = new Vector<Grafico>();
