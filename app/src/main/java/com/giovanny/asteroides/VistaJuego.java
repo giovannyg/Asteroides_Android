@@ -35,6 +35,14 @@ public class VistaJuego extends View {
     private static final int PASO_GIRO_NAVE = 5;
     private static final float PASO_ACELERACION_NAVE = 0.5f;
 
+    /*THREAD Y TIEMPO*/
+    //Thread encargado de procesar el juego
+    private ThreadJuego thread = new ThreadJuego();
+    //Cada cuanto queremos procesar cambios (ms)
+    private static int PERIODO_PROCESO = 50;
+    //Cuando se realizó el ultimo proceso
+    private long ultimoProceso = 0;
+
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -96,7 +104,42 @@ public class VistaJuego extends View {
             Asteroides.add(asteroide);
         }
     }
+     protected void actualizaFisica() {
+         long ahora = System.currentTimeMillis();
+         //No hagas nada si el periodo de proceso no se ha cumplido
+         if(ultimoProceso + PERIODO_PROCESO > ahora) {
+             return;
+         }
+         //Para una ejecución en tiempo real, calculemos retardo
+         double retardo = (ahora - ultimoProceso) / PERIODO_PROCESO;
+         ultimoProceso = ahora; //Para la proxima vez
+         /*Actualizamos la velocidad y dirección de la nave a partir de giroNave y aceleracionNave
+          segun la entrada del jugador*/
+         nave.setAngulo((int) (nave.getAngulo() + giroNave * retardo));
 
+         double nIncX = nave.getIncX() + aceleracionNave *
+                 Math.cos(Math.toRadians(nave.getAngulo())) * retardo;
+         double nIncY = nave.getIncY() + aceleracionNave *
+                 Math.sin(Math.toRadians(nave.getAngulo())) * retardo;
+         //Actualizamos si el modulo de la velocidad no excede el maximo
+         if(Math.hypot(nIncX, nIncY) <= Grafico.getMaxVelocidad()) {
+             nave.setIncX(nIncX);
+             nave.setIncY(nIncY);
+         }
+         //Actualizamos las posiciones X e Y
+         nave.incrementaPos(retardo);
+         for(Grafico asteroide : Asteroides) {
+             asteroide.incrementaPos(retardo);
+         }
+     }
+    class ThreadJuego extends Thread {
+        @Override
+        public void run() {
+            while(true) {
+                actualizaFisica();
+            }
+        }
+    }
     @Override
     protected void onSizeChanged(int ancho, int alto, int ancho_anter, int alto_anter) {
         super.onSizeChanged(ancho, alto, ancho_anter, alto_anter);
@@ -111,6 +154,9 @@ public class VistaJuego extends View {
 
         nave.setPosX((double)ancho/2);
         nave.setPosY((double)alto/2);
+
+        ultimoProceso = System.currentTimeMillis();
+        thread.start();
     }
 
     @Override
