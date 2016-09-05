@@ -1,13 +1,12 @@
 package com.giovanny.asteroides;
 
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.R.*;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -56,21 +53,44 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
         btn_salir = (Button) findViewById(R.id.salir);
         titulo = (TextView) findViewById(R.id.titulo);
 
-        /*Animaciones*/
-        Animation animacion_titulo = AnimationUtils.loadAnimation(this, R.anim.giro_con_zoom);
-        titulo.startAnimation(animacion_titulo);
-        Animation animacion_btn_jugar = AnimationUtils.loadAnimation(this, R.anim.aparecer);
-        btn_jugar.startAnimation(animacion_btn_jugar);
-        Animation animacion_btn_configurar = AnimationUtils.loadAnimation(this, R.anim.desplazamiento_derecha);
-        btn_configurar.startAnimation(animacion_btn_configurar);
-
         /*Eventos*/
         btn_jugar.setOnClickListener(this);
         btn_configurar.setOnClickListener(this);
         btn_about.setOnClickListener(this);
         btn_puntuaciones.setOnClickListener(this);
         btn_salir.setOnClickListener(this);
+
+        /*Animaciones*/
+        startAnimations();
     }
+
+    public void startAnimations() {
+
+        /*View animations*/
+        Animation animacion_titulo = AnimationUtils.loadAnimation(this, R.anim.giro_con_zoom);
+        titulo.startAnimation(animacion_titulo);
+
+        Animation animacion_btn_configurar = AnimationUtils.loadAnimation(this, R.anim.desplazamiento_derecha);
+        btn_configurar.startAnimation(animacion_btn_configurar);
+
+        /*Property Animations*/
+        Animator animacion_btn_play = AnimatorInflater.loadAnimator(this, R.animator.transparencia);
+        animacion_btn_play.setTarget(btn_jugar);
+
+
+        ObjectAnimator animacion_btn_puntuaciones = ObjectAnimator.ofFloat(btn_puntuaciones, "alpha", 0f, 1f);
+        animacion_btn_puntuaciones.setDuration(5000);
+
+
+        Animator animacion_btn_salir = AnimatorInflater.loadAnimator(this, R.animator.transparencia);
+        animacion_btn_salir.setTarget(btn_salir);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animacion_btn_play, animacion_btn_puntuaciones, animacion_btn_salir);
+        animatorSet.start();
+    }
+
+    public void setAlpha() {}
 
     @Override
     public void onClick(View v) {
