@@ -12,6 +12,8 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.PathShape;
 import android.graphics.drawable.shapes.Shape;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,6 +44,9 @@ public class VistaJuego extends View {
     private static int PERIODO_PROCESO = 50;
     //Cuando se realizó el ultimo proceso
     private long ultimoProceso = 0;
+
+    private float mX = 0, mY = 0;
+    private boolean disparo = false;
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -104,34 +109,38 @@ public class VistaJuego extends View {
             Asteroides.add(asteroide);
         }
     }
-     protected void actualizaFisica() {
-         long ahora = System.currentTimeMillis();
-         //No hagas nada si el periodo de proceso no se ha cumplido
-         if(ultimoProceso + PERIODO_PROCESO > ahora) {
-             return;
-         }
-         //Para una ejecución en tiempo real, calculemos retardo
-         double retardo = (ahora - ultimoProceso) / PERIODO_PROCESO;
-         ultimoProceso = ahora; //Para la proxima vez
+
+    synchronized
+    protected void actualizaFisica() {
+
+        long ahora = System.currentTimeMillis();
+        //No hagas nada si el periodo de proceso no se ha cumplido
+        if(ultimoProceso + PERIODO_PROCESO > ahora) {
+            return;
+        }
+        //Para una ejecución en tiempo real, calculemos retardo
+        double retardo = (ahora - ultimoProceso) / PERIODO_PROCESO;
+        ultimoProceso = ahora; //Para la proxima vez
          /*Actualizamos la velocidad y dirección de la nave a partir de giroNave y aceleracionNave
           segun la entrada del jugador*/
-         nave.setAngulo((int) (nave.getAngulo() + giroNave * retardo));
+        nave.setAngulo((int) (nave.getAngulo() + giroNave * retardo));
 
-         double nIncX = nave.getIncX() + aceleracionNave *
-                 Math.cos(Math.toRadians(nave.getAngulo())) * retardo;
-         double nIncY = nave.getIncY() + aceleracionNave *
-                 Math.sin(Math.toRadians(nave.getAngulo())) * retardo;
-         //Actualizamos si el modulo de la velocidad no excede el maximo
-         if(Math.hypot(nIncX, nIncY) <= Grafico.getMaxVelocidad()) {
-             nave.setIncX(nIncX);
-             nave.setIncY(nIncY);
-         }
-         //Actualizamos las posiciones X e Y
-         nave.incrementaPos(retardo);
-         for(Grafico asteroide : Asteroides) {
-             asteroide.incrementaPos(retardo);
-         }
-     }
+        double nIncX = nave.getIncX() + aceleracionNave *
+                Math.cos(Math.toRadians(nave.getAngulo())) * retardo;
+        double nIncY = nave.getIncY() + aceleracionNave *
+                Math.sin(Math.toRadians(nave.getAngulo())) * retardo;
+        //Actualizamos si el modulo de la velocidad no excede el maximo
+        if(Math.hypot(nIncX, nIncY) <= Grafico.getMaxVelocidad()) {
+            nave.setIncX(nIncX);
+            nave.setIncY(nIncY);
+        }
+        //Actualizamos las posiciones X e Y
+        nave.incrementaPos(retardo);
+        for(Grafico asteroide : Asteroides) {
+            asteroide.incrementaPos(retardo);
+        }
+    }
+
     class ThreadJuego extends Thread {
         @Override
         public void run() {
@@ -159,12 +168,102 @@ public class VistaJuego extends View {
         thread.start();
     }
 
+    synchronized
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         for (Grafico asteroide : Asteroides) {
             asteroide.dibujaGrafico(canvas);
         }
         nave.dibujaGrafico(canvas);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+        float x = event.getX();
+        float y = event.getY();
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+/*                if(aceleracionNave > 0) {
+                    aceleracionNave = 0;
+                }*/
+                disparo = true;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dx = Math.abs(x - mX);
+                float dy = Math.abs( y - mY);
+
+                if (dy < 5 && dx > 3) {
+                    giroNave = Math.round((mY - y) / 2);
+                    disparo = false;
+                }
+                else if (dx < 5 && dy > 3) {
+                    aceleracionNave = Math.round((mY - y) /20);
+                    disparo = false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                giroNave = 0;
+                aceleracionNave = 0;
+                if(disparo) {
+                    /*activaMisil();*/
+                }
+                break;
+        }
+        mX = x; mY = y;
+        return true;
+    }
+
+/*    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        super.onKeyDown(keyCode, event);
+
+        //Suponemos que vamos a procesar la pulsación
+        boolean procesada = true;
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                aceleracionNave = +PASO_ACELERACION_NAVE;
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                giroNave = -PASO_GIRO_NAVE;
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                giroNave = +PASO_GIRO_NAVE;
+                break;
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+            case KeyEvent.KEYCODE_ENTER:
+                //ActivaMisil();
+                break;
+            //Si estamos aquí, no hay pulsación que nos interese
+            default:
+                procesada = false;
+                break;
+        }
+        return procesada;
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        super.onKeyUp(keyCode, event);
+
+        boolean procesada = true;
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                aceleracionNave = 0;
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                giroNave = 0;
+                break;
+            //Si estamos aquí, no hay pulsación que nos interese
+            default:
+                procesada = false;
+                break;
+        }
+        return procesada;
+    }*/
 }
