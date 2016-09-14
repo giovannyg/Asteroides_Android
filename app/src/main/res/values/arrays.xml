@@ -10,6 +10,16 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string-array name="sensores">
+        <item>Sensor de Orientación</item>
+        <item>Sensor de Aceleración</item>
+        <item>Deshabilitar sensores</item>
+    </string-array>
+    <string-array name="sensoresValores">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
     <!-- Multijugador -->
     <string-array name="tipoConexion">
         <item>Wifi</item>

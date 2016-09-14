@@ -11,18 +11,24 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.PathShape;
 import android.graphics.drawable.shapes.Shape;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.EventListener;
+import java.util.List;
 import java.util.Vector;
 
 /**
  * Created by giovannyg on 18/08/2016.
  */
-public class VistaJuego extends View {
+public class VistaJuego extends View implements SensorEventListener {
 
     /*ASTEROIDES*/
     private Vector<Grafico> Asteroides; //vector con los asteroides
@@ -53,7 +59,9 @@ public class VistaJuego extends View {
 
         Drawable drawableNave, drawableAsteroide, drawableMisil;
 
-        SharedPreferences pref = context.getSharedPreferences("com.giovanny.asteroides_preferences", Context.MODE_PRIVATE);
+        SharedPreferences pref = context
+                .getSharedPreferences("com.giovanny.asteroides_preferences", Context.MODE_PRIVATE);
+
         if(pref.getString("graficos", "1").equals("0")) {
             Path pathAsteroide = new Path();
             pathAsteroide.moveTo((float) 0.3, (float) 0.0);
@@ -108,6 +116,28 @@ public class VistaJuego extends View {
             asteroide.setRotacion(Math.random() * 8 - 4);
             Asteroides.add(asteroide);
         }
+
+
+        String sensorActivo = pref.getString("sensores", "2");
+        SensorManager msensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        switch (sensorActivo) {
+            case "0":
+                List<Sensor> listaSensores = msensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+
+                if (!listaSensores.isEmpty()) {
+                    Sensor orientationSensor = listaSensores.get(0);
+                    msensorManager.registerListener(this, orientationSensor, msensorManager.SENSOR_DELAY_GAME);
+                }
+                break;
+            case "1":
+                List<Sensor> listaSensores2 = msensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
+
+                if (!listaSensores2.isEmpty()) {
+                    Sensor acelerometerSensor = listaSensores2.get(0);
+                    msensorManager.registerListener(this, acelerometerSensor, msensorManager.SENSOR_DELAY_GAME);
+                }
+                break;
+        }
     }
 
     synchronized
@@ -140,6 +170,22 @@ public class VistaJuego extends View {
             asteroide.incrementaPos(retardo);
         }
     }
+
+    private boolean hayValorInicial = false;
+    private float valorInicial;
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float valor = event.values[1];
+
+        if(!hayValorInicial) {
+            valorInicial = valor;
+            hayValorInicial = true;
+        }
+        giroNave = (int) (valor-valorInicial) / 3;
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     class ThreadJuego extends Thread {
         @Override

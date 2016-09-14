@@ -1,60 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.gesture.GestureOverlayView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gestures"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:padding="30dp"
-    android:orientation="vertical"
-    android:background="@drawable/bg_boot_land"
-    tools:context=".Inicio">
-
-    <TextView
-        android:id="@+id/titulo"
-        style="@style/AppName"
-        android:gravity="center_horizontal"
-        android:text="@string/app_name"
-        android:layout_marginBottom="25dp"/>
-    <TableLayout
+    android:gestureStrokeType="multiple"
+    android:fadeOffset="800">
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:stretchColumns="*">
-        <TableRow
-            android:layout_marginBottom="10dp">
-            <Button
-                android:id="@+id/jugar"
-                style="@style/BotonInicio"
-                android:text="@string/jugar"
-                android:layout_marginRight="10dp"
-                android:tag="jugar"/>
-            <Button
-                android:id="@+id/configurar"
-                style="@style/BotonInicio"
-                android:text="@string/configurar"
-                android:tag="configurar"/>
-        </TableRow>
-        <TableRow>
-            <Button
-                android:id="@+id/about"
-                style="@style/BotonInicio"
-                android:text="@string/about"
-                android:layout_marginRight="10dp"
-                android:tag="about"/>
-            <Button
-                android:id="@+id/puntuaciones"
-                style="@style/BotonInicio"
-                android:text="@string/puntuaciones"
-                android:tag="puntuaciones"/>
-        </TableRow>
-        <TableRow>
-            <Button
-                android:id="@+id/salir"
-                style="@style/BotonInicio"
-                android:text="@string/salir"
-                android:tag="salir"
-                android:visibility="gone"/>
-        </TableRow>
-    </TableLayout>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_boot_land"
+        tools:context=".Inicio">
+
+        <TextView
+            android:id="@+id/titulo"
+            style="@style/AppName"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:layout_marginBottom="25dp"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:stretchColumns="*">
+            <TableRow
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/jugar"
+                    style="@style/BotonInicio"
+                    android:text="@string/jugar"
+                    android:layout_marginRight="10dp"
+                    android:tag="jugar"/>
+                <Button
+                    android:id="@+id/configurar"
+                    style="@style/BotonInicio"
+                    android:text="@string/configurar"
+                    android:tag="configurar"/>
+            </TableRow>
+            <TableRow>
+                <Button
+                    android:id="@+id/about"
+                    style="@style/BotonInicio"
+                    android:text="@string/about"
+                    android:layout_marginRight="10dp"
+                    android:tag="about"/>
+                <Button
+                    android:id="@+id/puntuaciones"
+                    style="@style/BotonInicio"
+                    android:text="@string/puntuaciones"
+                    android:tag="puntuaciones"/>
+            </TableRow>
+            <TableRow>
+                <Button
+                    android:id="@+id/salir"
+                    style="@style/BotonInicio"
+                    android:text="@string/salir"
+                    android:tag="salir"
+                    android:visibility="gone"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</android.gesture.GestureOverlayView>

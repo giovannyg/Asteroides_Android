@@ -7,6 +7,11 @@ import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.gesture.Gesture;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureLibrary;
+import android.gesture.GestureOverlayView;
+import android.gesture.Prediction;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +27,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Inicio extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class Inicio extends AppCompatActivity implements View.OnClickListener, GestureOverlayView.OnGesturePerformedListener {
 
     private Button btn_jugar, btn_configurar, btn_about, btn_salir, btn_puntuaciones;
     private Menu menu;
     private TextView titulo;
     AlertDialog.Builder builder;
     public static AlmacenPuntuaciones almacen;
+    private GestureLibrary libreria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,14 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
 
         /*Animaciones*/
         startAnimations();
+
+        libreria = GestureLibraries.fromRawResource(this, R.raw.gesture);
+
+        if(!libreria.load()) {
+            finish();
+        }
+        GestureOverlayView gestureView = (GestureOverlayView) findViewById(R.id.gestures);
+        gestureView.addOnGesturePerformedListener(this);
     }
 
     public void startAnimations() {
@@ -177,5 +193,28 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener {
                 + preferences.getString("graficos", "?");
 
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
+
+        ArrayList<Prediction> predictions = libreria.recognize(gesture);
+        if(predictions.size() > 0) {
+            String comando = predictions.get(0).name;
+            switch (comando) {
+                case "play":
+                    startActivity(new Intent(this, Juego.class));
+                    break;
+                case "configurar":
+                    startActivity(new Intent(this, Preferencias.class));
+                    break;
+                case "acerca_de":
+                    startActivity(new Intent(this, About.class));
+                    break;
+                case "cancelar":
+                    finish();
+                    break;
+            }
+        }
     }
 }

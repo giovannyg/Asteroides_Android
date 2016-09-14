@@ -12,6 +12,13 @@
         android:entries="@array/tipoGraficos"
         android:entryValues="@array/tipoGraficosValores"
         android:defaultValue="1"/>
+    <ListPreference
+        android:key="sensores"
+        android:title="Sensores"
+        android:summary="Habilitar o deshabilitar los sensores para girar la nave"
+        android:entries="@array/sensores"
+        android:entryValues="@array/sensoresValores"
+        android:defaultValue="2"/>
     <EditTextPreference
         android:key="fragmentos"
         android:title="Numero de fragmentos"
