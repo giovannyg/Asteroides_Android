@@ -188,21 +188,7 @@ public class VistaJuego extends View implements SensorEventListener {
             asteroide.incrementaPos(retardo);
         }
 
-        //Actualizamos posición del misil
-/*        if(misilActivo) {
-            misil.incrementaPos(retardo);
-            tiempoMisil -= retardo;
-            if (tiempoMisil < 0) {
-                misilActivo = false;
-            } else {
-                for (int i = 0; i < Asteroides.size(); i++) {
-                    if (misil.verificaColision(Asteroides.elementAt(i))) {
-                        destruyeAsteroide(i);
-                        break;
-                    }
-                }
-            }
-        }*/
+
         //Actualizamos posición del misil
         if(misilActivo) {
             for(Grafico misil : Misiles) {
