@@ -47,9 +47,45 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, G
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }*/
+        /*Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();*/
         iniciarVistas();
     }
 
+/*    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+    }*/
 
     public void iniciarVistas(){
         almacen = new AlmacenPuntuacionesArray();
@@ -93,10 +129,8 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, G
         Animator animacion_btn_play = AnimatorInflater.loadAnimator(this, R.animator.transparencia);
         animacion_btn_play.setTarget(btn_jugar);
 
-
         ObjectAnimator animacion_btn_puntuaciones = ObjectAnimator.ofFloat(btn_puntuaciones, "alpha", 0f, 1f);
         animacion_btn_puntuaciones.setDuration(5000);
-
 
         Animator animacion_btn_salir = AnimatorInflater.loadAnimator(this, R.animator.transparencia);
         animacion_btn_salir.setTarget(btn_salir);

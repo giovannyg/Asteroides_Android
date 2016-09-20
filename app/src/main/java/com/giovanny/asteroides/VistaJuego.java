@@ -244,11 +244,41 @@ public class VistaJuego extends View implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
+    public ThreadJuego getThread() {
+        return thread;
+    }
+
     class ThreadJuego extends Thread {
+
+        private boolean pausa, corriendo;
+
+        public synchronized void pausar(){
+            pausa = true;
+        }
+        public synchronized  void reanudar() {
+            pausa = false;
+            notify();
+        }
+        public void detener() {
+            corriendo = false;
+            if(pausa) reanudar();
+        }
+
         @Override
         public void run() {
-            while(true) {
+            corriendo = true;
+
+            while(corriendo) {
                 actualizaFisica();
+                synchronized(this) {
+                    while(pausa) {
+                        try {
+                            wait();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
             }
         }
     }
