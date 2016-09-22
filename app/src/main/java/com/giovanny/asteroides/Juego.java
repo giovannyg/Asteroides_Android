@@ -23,12 +23,20 @@ public class Juego extends Activity {
     protected void onPause() {
         super.onPause();
         vistaJuego.getThread().pausar();
+        vistaJuego.detenerSensores();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        vistaJuego.detenerSensores();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         vistaJuego.getThread().reanudar();
+        vistaJuego.iniciarSensores();
     }
 
     @Override

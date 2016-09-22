@@ -62,6 +62,8 @@ public class VistaJuego extends View implements SensorEventListener {
     private boolean misilActivo = false;
     private int tiempoMisil;
     Drawable drawableMisil;
+    SensorManager msensorManager;
+    String sensorActivo;
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -136,8 +138,14 @@ public class VistaJuego extends View implements SensorEventListener {
             Asteroides.add(asteroide);
         }
 
-        String sensorActivo = pref.getString("sensores", "2");
-        SensorManager msensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        sensorActivo = pref.getString("sensores", "2");
+        msensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        iniciarSensores();
+
+
+    }
+
+    public void iniciarSensores() {
         switch (sensorActivo) {
             case "0":
                 List<Sensor> listaSensores = msensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
@@ -156,6 +164,9 @@ public class VistaJuego extends View implements SensorEventListener {
                 }
                 break;
         }
+    }
+    public void detenerSensores() {
+        msensorManager.unregisterListener(this);
     }
 
     synchronized
@@ -253,6 +264,7 @@ public class VistaJuego extends View implements SensorEventListener {
         private boolean pausa, corriendo;
 
         public synchronized void pausar(){
+
             pausa = true;
         }
         public synchronized  void reanudar() {

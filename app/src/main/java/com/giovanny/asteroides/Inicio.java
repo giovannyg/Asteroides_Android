@@ -12,6 +12,7 @@ import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.Prediction;
+import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, G
     AlertDialog.Builder builder;
     public static AlmacenPuntuaciones almacen;
     private GestureLibrary libreria;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,45 +49,35 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, G
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }*/
-        /*Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();*/
+        mp = MediaPlayer.create(this, R.raw.intro_soundtrack);
+        mp.start();
+        mp.setLooping(true);
         iniciarVistas();
-    }
-
-/*    @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        mp.pause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+        mp.pause();
     }
 
     @Override
     protected void onDestroy() {
+        mp.stop();
         super.onDestroy();
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-    }*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mp.start();
+    }
 
     public void iniciarVistas(){
         almacen = new AlmacenPuntuacionesArray();
