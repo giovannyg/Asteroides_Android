@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, G
     public static AlmacenPuntuaciones almacen;
     private GestureLibrary libreria;
     private MediaPlayer mp;
+    private int pos_cancion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,25 @@ public class Inicio extends AppCompatActivity implements View.OnClickListener, G
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }*/
+
         mp = MediaPlayer.create(this, R.raw.intro_soundtrack);
         mp.start();
         mp.setLooping(true);
+
         iniciarVistas();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("pos_cancion", mp.getCurrentPosition());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        pos_cancion = savedInstanceState.getInt("pos_cancion");
+        mp.seekTo(pos_cancion);
     }
 
     @Override
